@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import CourseCard from "./CourseCard";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function HomePage() {
+  const navigate = useNavigate();
   const [courses, setCourses] = useState([]);
   const fetchCourse = async () => {
     const { data } = await axios.get("/api/course");
@@ -12,6 +14,10 @@ export default function HomePage() {
 
   useEffect(() => {
     fetchCourse();
+    let user = localStorage.getItem("user");
+    if (!user) {
+      navigate("/login");
+    }
   }, []);
   return (
     <>

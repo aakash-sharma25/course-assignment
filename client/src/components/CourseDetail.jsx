@@ -1,9 +1,11 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 export default function CourseDetail() {
+  const navigate = useNavigate();
   const { id } = useParams();
+  const [studentId, setStudentId] = useState([]);
   const [course, setCourse] = useState([]);
   const [expanded, setExpanded] = useState(false);
 
@@ -12,11 +14,18 @@ export default function CourseDetail() {
     setCourse(data);
   };
   const getCourse = async () => {
-    
+    const { data } = await axios.post("/api/student/buy", {
+      courseId: id,
+      studentId,
+    });
+    navigate("/dashboard/"+studentId);
   };
 
   useEffect(() => {
     fetchCourse();
+    let user = localStorage.getItem("user");
+    user = JSON.parse(user);
+    setStudentId(user?.user?._id)
   }, []);
 
   return (

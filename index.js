@@ -1,7 +1,8 @@
 const express = require("express");
 const courseRoutes = require("./router/courseRoutes");
 const studentRoutes = require("./router/studentRoutes");
-const path = require("path")
+const authRoutes = require("./router/authRoutes");
+const path = require("path");
 
 const mongoose = require("mongoose");
 require("dotenv").config();
@@ -22,9 +23,9 @@ const dbConnect = async () => {
 
 dbConnect();
 
-// app.use("/api/auth", authRoutes);
-app.use("/api/student",studentRoutes );
-app.use("/api/course",courseRoutes );
+app.use("/api/auth", authRoutes);
+app.use("/api/student", studentRoutes);
+app.use("/api/course", courseRoutes);
 
 app.use(express.static(path.join(__dirname, "./client/dist")));
 
