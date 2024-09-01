@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const StudentDashboard = () => {
+  const navigate = useNavigate();
   const [courses, setCourses] = useState([]);
   const { id } = useParams();
   const fetchUserData = async () => {
@@ -14,8 +15,13 @@ const StudentDashboard = () => {
       console.error("Error fetching user data:", error);
     }
   };
+  
   useEffect(() => {
     fetchUserData();
+    let user = localStorage.getItem("user");
+    if (!user) {
+      navigate("/login");
+    }
   }, []);
 
   const handleCompleteCourse = async (courseId) => {
