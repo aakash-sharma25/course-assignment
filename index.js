@@ -1,6 +1,7 @@
 const express = require("express");
 const courseRoutes = require("./router/courseRoutes");
 const studentRoutes = require("./router/studentRoutes");
+const path = require("path")
 
 const mongoose = require("mongoose");
 require("dotenv").config();
